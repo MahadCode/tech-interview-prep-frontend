@@ -1,43 +1,88 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { Provider } from 'react-redux'
-import store from './store/store.js'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import AuthLayout from './features/auth/components/AuthLayout.jsx'
-import LoginPage from './features/auth/pages/LoginPage.jsx'
-import SignupPage from './features/auth/pages/SignupPage.jsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { Provider } from "react-redux";
+import store from "./store/store.js";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AuthLayout from "./features/auth/components/AuthLayout.jsx";
+import LoginPage from "./features/auth/pages/LoginPage.jsx";
+import SignupPage from "./features/auth/pages/SignupPage.jsx";
+import AddQuestion from "./features/questions/pages/AddQuestion.jsx";
+import EditQuestion from "./features/questions/pages/EditQuestion.jsx";
+import AllQuestions from "./features/questions/pages/AllQuestions.jsx";
+import Home from "./pages/Home.jsx";
+import QuestionPage from "./features/questions/pages/QuestionPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-        {
-            path: "/login",
-            element: (
-                <AuthLayout authentication={false}>
-                    <LoginPage />
-                </AuthLayout>
-            ),
-        },
-        {
-            path: "/signup",
-            element: (
-                <AuthLayout authentication={false}>
-                    <SignupPage />
-                </AuthLayout>
-            ),
-        },
+      {
+        path: "/",
+        element: (
+          <AuthLayout authentication={false}>
+            <Home />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/login",
+        element: (
+          <AuthLayout authentication={false}>
+            <LoginPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/signup",
+        element: (
+          <AuthLayout authentication={false}>
+            <SignupPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/all-questions",
+        element: (
+          <AuthLayout authentication>
+            <AllQuestions />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/add-question",
+        element: (
+          <AuthLayout authentication>
+            <AddQuestion />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/questions/:questionId",
+        element: (
+          <AuthLayout authentication>
+            <QuestionPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/questions/:id/edit",
+        element: (
+          <AuthLayout authentication>
+            <EditQuestion />
+          </AuthLayout>
+        ),
+      },
     ],
-},
-])
+  },
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>,
-)
+);

@@ -27,7 +27,7 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      setError(error.response?.data?.detail || "Invalid email or password");
+      setError(error.response?.data?.detail || "Invalid username or password");
     }
   };
 
