@@ -1,13 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Container from "./Container";
 import LogoutBtn from "./LogoutBtn";
 
 function Header() {
-
     const authStatus = useSelector((state) => state.auth.status);
-
     const navigate = useNavigate();
 
     const navItems = [
@@ -27,57 +24,67 @@ function Header() {
             active: !authStatus,
         },
         {
-            name: "All Posts",
-            slug: "/all-posts",
+            name: "All Questions",
+            slug: "/all-questions",
             active: authStatus,
         },
         {
-            name: "Add Post",
-            slug: "/add-post",
+            name: "Add Question",
+            slug: "/add-question",
             active: authStatus,
         },
     ];
 
     return (
-        <header className="py-3 shadow bg-gray-500">
-            <Container>
+        <header className="z-30 flex items-center w-full h-24 sm:h-32 bg-white dark:bg-gray-800">
+            <div className="container flex items-center justify-between px-6 mx-auto">
 
-                <nav className="flex items-center">
+                {/* Logo */}
+                <div className="text-3xl font-black text-gray-800 uppercase dark:text-white">
+                    <Link to="/">
+                        Interview Platform
+                    </Link>
+                </div>
 
-                    <div className="mr-4">
-                        <Link to="/">
-                            <span className="text-xl font-bold text-white">
-                                Interview Platform
-                            </span>
-                        </Link>
-                    </div>
+                {/* Navigation */}
+                <div className="flex items-center">
 
-                    <ul className="flex ml-auto items-center">
+                    <nav className="items-center hidden text-lg text-gray-800 uppercase lg:flex dark:text-white">
 
                         {navItems.map((item) =>
                             item.active ? (
-                                <li key={item.name}>
-                                    <button
-                                        onClick={() => navigate(item.slug)}
-                                        className="inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
-                                    >
-                                        {item.name}
-                                    </button>
-                                </li>
+                                <button
+                                    key={item.name}
+                                    type="button"
+                                    onClick={() => navigate(item.slug)}
+                                    className="flex px-6 py-2 hover:text-pink-500 duration-200"
+                                >
+                                    {item.name}
+                                </button>
                             ) : null
                         )}
 
+                        {/* Logout */}
                         {authStatus && (
-                            <li>
+                            <div className="flex px-6 py-2">
                                 <LogoutBtn />
-                            </li>
+                            </div>
                         )}
 
-                    </ul>
+                    </nav>
 
-                </nav>
+                    {/* Mobile menu button */}
+                    <button
+                        type="button"
+                        className="flex flex-col ml-4 lg:hidden"
+                    >
+                        <span className="w-6 h-1 mb-1 bg-gray-800 dark:bg-white" />
+                        <span className="w-6 h-1 mb-1 bg-gray-800 dark:bg-white" />
+                        <span className="w-6 h-1 mb-1 bg-gray-800 dark:bg-white" />
+                    </button>
 
-            </Container>
+                </div>
+            </div>
         </header>
     );
 }
