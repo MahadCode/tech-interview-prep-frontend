@@ -14,6 +14,7 @@ import AllQuestions from "./features/questions/pages/AllQuestions.jsx";
 import AddSolution from "./features/discussion/pages/AddSolution.jsx";
 import AllSolutions from "./features/discussion/pages/AllSolutions.jsx";
 import ReportQuestionPage from "./features/reports/pages/ReportQuesionPage.jsx";
+import ProfilePage from "./features/dashboard/pages/ProfilePage.jsx";
 import Home from "./pages/Home.jsx";
 import QuestionPage from "./features/questions/pages/QuestionPage.jsx";
 
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
             <SignupPage />
           </AuthLayout>
         ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <AuthLayout>
+            <ProfilePage/>
+          </AuthLayout>
+        )
       },
       {
         path: "/all-questions",
@@ -101,7 +110,7 @@ const router = createBrowserRouter([
               <ReportQuestionPage/>
             </AuthLayout>
           )
-      }
+      },
     ],
   },
 ]);
