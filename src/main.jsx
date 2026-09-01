@@ -11,6 +11,9 @@ import SignupPage from "./features/auth/pages/SignupPage.jsx";
 import AddQuestion from "./features/questions/pages/AddQuestion.jsx";
 import EditQuestion from "./features/questions/pages/EditQuestion.jsx";
 import AllQuestions from "./features/questions/pages/AllQuestions.jsx";
+import AddSolution from "./features/discussion/pages/AddSolution.jsx";
+import AllSolutions from "./features/discussion/pages/AllSolutions.jsx";
+import ReportQuestionPage from "./features/reports/pages/ReportQuesionPage.jsx";
 import Home from "./pages/Home.jsx";
 import QuestionPage from "./features/questions/pages/QuestionPage.jsx";
 
@@ -75,6 +78,30 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
+      {
+         path: "/questions/:questionId/submit-solution",
+         element: (
+          <AuthLayout authentication>
+              <AddSolution/>
+          </AuthLayout>
+         )
+      },
+      {
+         path: "/questions/:questionId/solutions",
+         element: (
+          <AuthLayout authentication>
+            <AllSolutions/>
+          </AuthLayout>
+         )
+      },
+      {
+          path: "/questions/:questionId/report",
+          element: (
+            <AuthLayout authentication>
+              <ReportQuestionPage/>
+            </AuthLayout>
+          )
+      }
     ],
   },
 ]);
