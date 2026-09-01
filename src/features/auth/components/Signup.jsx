@@ -5,13 +5,21 @@ import Button from "../../../components/Button.jsx";
 import Input from "../../../components/Input.jsx";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { register as registerApi, login as loginApi, getCurrentUser } from "../api/auth.js";
+import {
+  register as registerApi,
+  login as loginApi,
+  getCurrentUser,
+} from "../api/auth.js";
 
 function Signup() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState:{ errors }, } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const create = async (data) => {
     setError("");
@@ -27,11 +35,8 @@ function Signup() {
       });
 
       if (response.data) {
-        const userResponse = await loginApi(
-            data.username,
-            data.password,
-        )
-        console.log(userResponse.data)
+        const userResponse = await loginApi(data.username, data.password);
+        console.log(userResponse.data);
 
         if (userResponse.data) {
           dispatch(
@@ -44,9 +49,28 @@ function Signup() {
         navigate("/");
       }
     } catch (error) {
-      console.log(error.response?.data);
+      let errorMessage = {};
+      for (let key in error.response?.data) {
+        let errorMsg = "";
+        for (let e of error.response.data[key]) {
+          errorMsg = errorMsg + " " + e;
+        }
+        if (errorMsg != "") {
+          errorMessage[key] = errorMsg;
+        }
+      }
+      let fields = ["username", "first_name", "last_name", "email", "phone", "bio", "password"];
+      
+      let displayError = "Unable to create account";
+      for(let field of fields){
+        if( field in errorMessage){
+          displayError = errorMessage[field];
+          break;
+        }
 
-      setError(error.response?.data?.detail || "Unable to create account");
+      }
+
+      setError(displayError);
     }
   };
 

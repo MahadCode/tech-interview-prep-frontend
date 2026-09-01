@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import { User } from "lucide-react";
 import { getQuestion, deleteQuestion } from "../api/questionService";
+import CommentSection from "../../comments/components/CommentSection";
 
 export default function QuestionPage() {
   const [question, setQuestion] = useState(null);
@@ -14,8 +15,9 @@ export default function QuestionPage() {
   const navigate = useNavigate();
 
   const userData = useSelector((state) => state.auth.userData);
-  
-  const isAuthor = question && userData ? question.author?.id === userData.id : false;
+
+  const isAuthor =
+    question && userData ? question.author?.id === userData.id : false;
 
   useEffect(() => {
     if (questionId) {
@@ -50,12 +52,12 @@ export default function QuestionPage() {
         {/* Title Bar */}
         <div className="w-full border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
           <div className="flex items-start justify-between">
-            <h1 className="text-2xl font-normal text-gray-800 dark:text-white break-words pr-4">
+            <h1 className="text-2xl font-normal text-gray-800 dark:text-white wrap-break-word pr-4">
               {question.title}
             </h1>
 
             {isAuthor && (
-              <div className="flex-shrink-0 flex gap-2">
+              <div className="shrink-0 flex gap-2">
                 <Link to={`/questions/${question.id}/edit`}>
                   <Button bgColor="bg-green-500">Edit</Button>
                 </Link>
@@ -112,6 +114,23 @@ export default function QuestionPage() {
               ))}
             </div>
 
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link to={`/questions/${question.id}/submit-solution`}>
+                <Button>Submit Your Solution</Button>
+              </Link>
+
+              <Link to={`/questions/${question.id}/solutions`}>
+                <Button bgColor="bg-green-500">View All Solutions</Button>
+              </Link>
+              
+              <Link to={`/questions/${question.id}/report`}>
+                <Button bgColor="bg-red-500">Report</Button>
+              </Link>
+
+            </div>
+             
+            
+
             {/* Author card - bottom right, SO style */}
             <div className="flex justify-end mt-6">
               <div className="bg-blue-50 dark:bg-gray-800 rounded-md p-3 flex items-center gap-3">
@@ -123,7 +142,10 @@ export default function QuestionPage() {
                   />
                 ) : (
                   <div className="w-8 h-8 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-gray-200 dark:border-gray-600">
-                    <User size={16} className="text-gray-500 dark:text-gray-300" />
+                    <User
+                      size={16}
+                      className="text-gray-500 dark:text-gray-300"
+                    />
                   </div>
                 )}
                 <span className="text-sm text-blue-700 dark:text-blue-300 font-medium">
@@ -131,6 +153,8 @@ export default function QuestionPage() {
                 </span>
               </div>
             </div>
+
+            <CommentSection questionId={question.id} />
           </div>
         </div>
       </Container>
