@@ -17,6 +17,10 @@ import ReportQuestionPage from "./features/reports/pages/ReportQuesionPage.jsx";
 import ProfilePage from "./features/dashboard/pages/ProfilePage.jsx";
 import Home from "./pages/Home.jsx";
 import QuestionPage from "./features/questions/pages/QuestionPage.jsx";
+import DashboardPage from "./features/dashboard/pages/DashboardPage.jsx";
+import GoalsPage from "./features/dashboard/pages/GoalsPage.jsx";
+import ProgressPage from "./features/dashboard/pages/ProgressPage.jsx";
+import StatisticsPage from "./features/dashboard/pages/StatisticsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,9 +55,41 @@ const router = createBrowserRouter([
         path: "/profile",
         element: (
           <AuthLayout>
-            <ProfilePage/>
+            <ProfilePage />
           </AuthLayout>
-        )
+        ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <AuthLayout>
+            <DashboardPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/dashboard/progress",
+        element: (
+          <AuthLayout>
+            <ProgressPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/dashboard/goals",
+        element: (
+          <AuthLayout>
+            <GoalsPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/dashboard/statistics",
+        element: (
+          <AuthLayout>
+            <StatisticsPage />
+          </AuthLayout>
+        ),
       },
       {
         path: "/all-questions",
@@ -88,28 +124,28 @@ const router = createBrowserRouter([
         ),
       },
       {
-         path: "/questions/:questionId/submit-solution",
-         element: (
+        path: "/questions/:questionId/submit-solution",
+        element: (
           <AuthLayout authentication>
-              <AddSolution/>
+            <AddSolution />
           </AuthLayout>
-         )
+        ),
       },
       {
-         path: "/questions/:questionId/solutions",
-         element: (
+        path: "/questions/:questionId/solutions",
+        element: (
           <AuthLayout authentication>
-            <AllSolutions/>
+            <AllSolutions />
           </AuthLayout>
-         )
+        ),
       },
       {
-          path: "/questions/:questionId/report",
-          element: (
-            <AuthLayout authentication>
-              <ReportQuestionPage/>
-            </AuthLayout>
-          )
+        path: "/questions/:questionId/report",
+        element: (
+          <AuthLayout authentication>
+            <ReportQuestionPage />
+          </AuthLayout>
+        ),
       },
     ],
   },

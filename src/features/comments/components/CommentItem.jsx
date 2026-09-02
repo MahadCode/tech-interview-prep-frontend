@@ -7,7 +7,7 @@ import { deleteComment } from "../api/commentService";
 export default function CommentItem({ comment, onReplyAdded, onDeleteComment, level = 0 }) {
   const [showReplyForm, setShowReplyForm] = useState(false);
 
-   const userData = useSelector((state) => state.auth.userData);
+  const userData = useSelector((state) => state.auth.userData);
 
   const isAuthor =
     comment && userData ? comment.author?.id === userData.id : false;
