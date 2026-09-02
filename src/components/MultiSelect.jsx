@@ -15,7 +15,7 @@ function MultiSelect({ options, label, value = [], onChange, className = "" }) {
     <div className={`w-full ${className}`}>
       {label && <label className="inline-block mb-1 pl-1">{label}</label>}
 
-      <div className="flex flex-wrap gap-2 p-3 border border-gray-200 rounded-lg bg-white min-h-[3rem]">
+      <div className="flex flex-wrap gap-2 p-3 border border-gray-200 rounded-lg bg-white min-h-12">
         {options?.length ? (
           options.map((opt) => {
             const idStr = String(opt.id);
