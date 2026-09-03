@@ -38,7 +38,6 @@ const DashboardPage = () => {
         data.progress_percentage = percentage;
         data.progress = progress;
 
-        console.log(data.goals);
         setDashboardData(data);
       } catch (error) {
         console.error(error);

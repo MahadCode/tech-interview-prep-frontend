@@ -35,7 +35,7 @@ function ProfileMenu({ userData, mobile = false }) {
       navigate("/login");
       setIsOpen(false);
     } catch (error) {
-      console.log(error.response?.data);
+      console.error(error.response?.data);
     }
   };
 
@@ -97,6 +97,33 @@ function ProfileMenu({ userData, mobile = false }) {
                 {userData.email}
               </p>
             )}
+
+            {userData?.account_status === "pending_verification" && (
+              <>
+                <span className="mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-50 px-2 py-0.5 text-[11px] font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+                  <span className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+                  Email Not Verified
+                </span>
+
+                <button
+                  onClick={() =>
+                    navigate("/verification-email-sent", {
+                      state: { from: "verify-email" },
+                    })
+                  }
+                  className="mt-2 inline-flex items-center rounded-md bg-gray-900 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm transition-colors hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1"
+                >
+                  Verify Email
+                </button>
+              </>
+            )}
+
+            {userData?.account_status === "active" && (
+              <span className="mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                <span className="size-1.5 rounded-full bg-emerald-500" />
+                Email Verified
+              </span>
+            )}
           </div>
 
           <div className="py-2">
@@ -132,6 +159,46 @@ function ProfileMenu({ userData, mobile = false }) {
       {/* Mobile Profile Options */}
       {isOpen && mobile && (
         <div className="mt-1 ml-4 border-l-2 border-gray-200 dark:border-gray-600">
+          {/* Email */}
+          {userData?.email && (
+            <p className="px-5 pt-2 pb-1 text-xs text-gray-500 dark:text-gray-400 truncate">
+              {userData.email}
+            </p>
+          )}
+
+          {/* Email Not Verified */}
+          {userData?.account_status === "pending_verification" && (
+            <div className="px-5 py-2">
+              <span className="inline-flex items-center gap-x-1.5 rounded-md bg-red-50 px-2 py-0.5 text-[11px] font-medium text-red-700 ring-1 ring-inset ring-red-600/20 dark:bg-red-900/20 dark:text-red-400 dark:ring-red-500/20">
+                <span className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+                Email Not Verified
+              </span>
+
+              <button
+                type="button"
+                onClick={() =>
+                  handleNavigate("/verification-email-sent", {
+                    state: { from: "verify-email" },
+                  })
+                }
+                className="mt-2 inline-flex items-center rounded-md bg-gray-900 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm transition-colors hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1 dark:bg-gray-700 dark:hover:bg-gray-600"
+              >
+                Verify Email
+              </button>
+            </div>
+          )}
+
+          {/* Email Verified */}
+          {userData?.account_status === "active" && (
+            <div className="px-5 py-2">
+              <span className="inline-flex items-center gap-x-1.5 rounded-md bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-900/20 dark:text-emerald-400 dark:ring-emerald-500/20">
+                <span className="size-1.5 rounded-full bg-emerald-500" />
+                Email Verified
+              </span>
+            </div>
+          )}
+
+          {/* Manage Profile */}
           <button
             type="button"
             onClick={() => handleNavigate("/profile")}
@@ -140,6 +207,7 @@ function ProfileMenu({ userData, mobile = false }) {
             Manage Profile
           </button>
 
+          {/* Dashboard */}
           <button
             type="button"
             onClick={() => handleNavigate("/dashboard")}
@@ -148,10 +216,11 @@ function ProfileMenu({ userData, mobile = false }) {
             Dashboard
           </button>
 
+          {/* Logout */}
           <button
             type="button"
             onClick={handleLogout}
-            className="block w-full px-5 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400"
+            className="block w-full px-5 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
           >
             Logout
           </button>

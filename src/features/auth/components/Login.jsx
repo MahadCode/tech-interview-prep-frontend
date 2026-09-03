@@ -4,7 +4,7 @@ import { login as authLogin } from "../authSlice";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import { useDispatch } from "react-redux";
-import { login as loginApi } from "../api/auth";
+import { login as loginApi, getCurrentUser } from "../api/auth";
 import { useForm } from "react-hook-form";
 
 function Login() {
@@ -21,9 +21,12 @@ function Login() {
 
     try {
       const response = await loginApi(data.username, data.password);
+      const userResponse = await getCurrentUser();
 
-      if (response.data) {
-        dispatch(authLogin(response.data));
+      if (userResponse.data) {
+        dispatch(authLogin({
+          userData: userResponse.data
+        }));
         navigate("/");
       }
     } catch (error) {

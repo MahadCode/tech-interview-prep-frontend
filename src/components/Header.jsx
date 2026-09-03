@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import ProfileMenu from "./ProfileMenu";
 
 function Header() {
+
     const authStatus = useSelector((state) => state.auth.status);
     const userData = useSelector((state) => state.auth.userData);
 
