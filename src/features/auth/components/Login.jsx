@@ -24,9 +24,11 @@ function Login() {
       const userResponse = await getCurrentUser();
 
       if (userResponse.data) {
-        dispatch(authLogin({
-          userData: userResponse.data
-        }));
+        dispatch(
+          authLogin({
+            userData: userResponse.data,
+          }),
+        );
         navigate("/");
       }
     } catch (error) {
@@ -82,6 +84,14 @@ function Login() {
             <Button type="submit" className="w-full">
               Sign in
             </Button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="mt-2 text-sm text-pink-500 hover:text-pink-600"
+            >
+              Forgot your password?
+            </button>
           </div>
         </form>
       </div>

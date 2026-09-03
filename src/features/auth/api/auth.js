@@ -12,3 +12,6 @@ export const logout = () => api.post("auth/logout/");
 export const getCurrentUser = () => api.get("auth/current-user/");
 
 export const resendEmailVerification = () => api.post("auth/resend-verification/")
+export const requestPasswordRecovery = (data) => api.post("auth/recover-password/", data)
+export const resetPassword = (token, data) => api.post(`auth/reset-password/${token}/`, data)
+export const changePassword = (data) => api.post(`auth/change-password/`, data)

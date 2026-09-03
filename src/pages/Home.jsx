@@ -1,10 +1,13 @@
 import React from "react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const Home = () => {
-     const navigate = useNavigate();
+    const authStatus = useSelector((state) => state.auth.status);
+
+    const navigate = useNavigate();
     return (
         <main className="relative min-h-screen overflow-hidden bg-white dark:bg-gray-800">
 
@@ -31,18 +34,18 @@ const Home = () => {
                         <div className="flex mt-8">
                             <button
                                 type="button"
-                                onClick={() => {navigate("/signup")}}
+                                onClick={() => navigate(authStatus ? "/dashboard" : "/signup")}
                                 className="px-4 py-2 mr-4 text-white uppercase bg-pink-500 border-2 border-transparent rounded-lg text-md hover:bg-pink-400"
                             >
-                                Register
+                                { authStatus ? "Dashboard" : "Register" }
                             </button>
 
                             <button
                                 type="button"
-                                onClick={() => {navigate("/login")}}
+                                 onClick={() => navigate(authStatus ? "/dashboard/statistics" : "/signup")}
                                 className="px-4 py-2 text-pink-500 uppercase bg-transparent border-2 border-pink-500 rounded-lg dark:text-white hover:bg-pink-500 hover:text-white text-md"
                             >
-                                Login
+                                { authStatus ? "View Stats" : "Login" }
                             </button>
                         </div>
 

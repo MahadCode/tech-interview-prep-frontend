@@ -39,9 +39,9 @@ function ProfileMenu({ userData, mobile = false }) {
     }
   };
 
-  const handleNavigate = (path) => {
+  const handleNavigate = (path, options) => {
     setIsOpen(false);
-    navigate(path);
+    navigate(path, options);
   };
 
   const username = userData?.first_name || userData?.username || "User";
@@ -142,6 +142,38 @@ function ProfileMenu({ userData, mobile = false }) {
             >
               Dashboard
             </button>
+
+             <button
+              type="button"
+              onClick={() => handleNavigate("/dashboard/goals")}
+              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+            >
+              Manage Goals
+            </button>
+
+             <button
+              type="button"
+              onClick={() => handleNavigate("/dashboard/progress")}
+              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+            >
+              See Progress
+            </button>
+
+             <button
+              type="button"
+              onClick={() => handleNavigate("/dashboard/statistics")}
+              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+            >
+              See Stats
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleNavigate("/change-password")}
+              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+            >
+              Change Password
+            </button>
           </div>
 
           <div className="border-t border-gray-100 py-2">
@@ -207,13 +239,45 @@ function ProfileMenu({ userData, mobile = false }) {
             Manage Profile
           </button>
 
-          {/* Dashboard */}
           <button
             type="button"
             onClick={() => handleNavigate("/dashboard")}
             className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
           >
             Dashboard
+          </button>
+
+          {/* Dashboard */}
+          <button
+            type="button"
+            onClick={() => handleNavigate("/dashboard/goals")}
+            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+          >
+            Manage Gaols
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavigate("/dashboard/progress")}
+            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+          >
+            See Progress
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavigate("/dashboard/statistics")}
+            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+          >
+            See Stats
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavigate("/change-password")}
+            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+          >
+            Change Password
           </button>
 
           {/* Logout */}
