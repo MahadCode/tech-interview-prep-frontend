@@ -15,7 +15,6 @@ import AddSolution from "./features/discussion/pages/AddSolution.jsx";
 import AllSolutions from "./features/discussion/pages/AllSolutions.jsx";
 import ReportQuestionPage from "./features/reports/pages/ReportQuesionPage.jsx";
 import ProfilePage from "./features/dashboard/pages/ProfilePage.jsx";
-import Home from "./pages/Home.jsx";
 import QuestionPage from "./features/questions/pages/QuestionPage.jsx";
 import DashboardPage from "./features/dashboard/pages/DashboardPage.jsx";
 import GoalsPage from "./features/dashboard/pages/GoalsPage.jsx";
@@ -23,6 +22,9 @@ import ProgressPage from "./features/dashboard/pages/ProgressPage.jsx";
 import StatisticsPage from "./features/dashboard/pages/StatisticsPage.jsx";
 import VerificationEmailSent from "./features/auth/pages/VerificationEmailSent.jsx";
 import ForgotPassword from "./features/auth/pages/ForgetPassword.jsx";
+import ResetPassword from "./features/auth/pages/ResetPassword.jsx";
+import ChangePassword from "./features/auth/pages/ChangePassword.jsx";
+import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
   {
@@ -156,8 +158,18 @@ const router = createBrowserRouter([
       {
         path: "/forgot-password",
         element: (
-          <AuthLayout authentication={false}>
             <ForgotPassword />
+        ),
+      },
+      {
+        path: "/reset-password/:token",
+        element: <ResetPassword />,
+      },
+      {
+        path: "/change-password",
+        element: (
+          <AuthLayout authentication>
+            <ChangePassword />
           </AuthLayout>
         ),
       },
