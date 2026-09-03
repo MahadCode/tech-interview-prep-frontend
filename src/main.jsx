@@ -21,6 +21,8 @@ import DashboardPage from "./features/dashboard/pages/DashboardPage.jsx";
 import GoalsPage from "./features/dashboard/pages/GoalsPage.jsx";
 import ProgressPage from "./features/dashboard/pages/ProgressPage.jsx";
 import StatisticsPage from "./features/dashboard/pages/StatisticsPage.jsx";
+import VerificationEmailSent from "./features/auth/pages/VerificationEmailSent.jsx";
+import ForgotPassword from "./features/auth/pages/ForgetPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -144,6 +146,18 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication>
             <ReportQuestionPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/verification-email-sent",
+        element: <VerificationEmailSent />,
+      },
+      {
+        path: "/forgot-password",
+        element: (
+          <AuthLayout authentication={false}>
+            <ForgotPassword />
           </AuthLayout>
         ),
       },

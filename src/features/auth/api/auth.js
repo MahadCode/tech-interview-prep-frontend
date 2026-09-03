@@ -10,3 +10,5 @@ export const login = (username, password) =>
 
 export const logout = () => api.post("auth/logout/");
 export const getCurrentUser = () => api.get("auth/current-user/");
+
+export const resendEmailVerification = () => api.post("auth/resend-verification/")

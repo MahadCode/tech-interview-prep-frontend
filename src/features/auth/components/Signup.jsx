@@ -35,19 +35,18 @@ function Signup() {
       });
 
       if (response.data) {
-        const userResponse = await loginApi(data.username, data.password);
-        console.log(userResponse.data);
-
-        if (userResponse.data) {
-          dispatch(
-            login({
-              userData: userResponse.data,
-            }),
-          );
-        }
-
-        navigate("/");
+        
+        navigate("/verification-email-sent", {
+          state: {
+            from: "signup",
+            user: {
+              username: data.username,
+              password: data.password,
+            },
+          },
+        });
       }
+
     } catch (error) {
       let errorMessage = {};
       for (let key in error.response?.data) {
@@ -59,15 +58,22 @@ function Signup() {
           errorMessage[key] = errorMsg;
         }
       }
-      let fields = ["username", "first_name", "last_name", "email", "phone", "bio", "password"];
-      
+      let fields = [
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "phone",
+        "bio",
+        "password",
+      ];
+
       let displayError = "Unable to create account";
-      for(let field of fields){
-        if( field in errorMessage){
+      for (let field of fields) {
+        if (field in errorMessage) {
           displayError = errorMessage[field];
           break;
         }
-
       }
 
       setError(displayError);
