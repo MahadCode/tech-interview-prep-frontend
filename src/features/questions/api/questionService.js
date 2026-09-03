@@ -23,3 +23,9 @@ export const getAllJobRoles = () =>
 
 export const getAllTags = () =>
     api.get("taxonomy/tags/")
+
+export const getQuestionVotes = (id) =>
+    api.get(`questions/${id}/votes/`)
+
+export const voteQuestion = (id, data) =>
+    api.post(`questions/${id}/vote/`, data)
