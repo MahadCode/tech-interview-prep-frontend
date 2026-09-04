@@ -127,6 +127,16 @@ function ProfileMenu({ userData, mobile = false }) {
           </div>
 
           <div className="py-2">
+            {userData?.role == "moderator" && (
+              <button
+                type="button"
+                onClick={() => handleNavigate("/moderation")}
+                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              >
+                Manage Reports
+              </button>
+            )}
+
             <button
               type="button"
               onClick={() => handleNavigate("/profile")}
@@ -143,7 +153,7 @@ function ProfileMenu({ userData, mobile = false }) {
               Dashboard
             </button>
 
-             <button
+            <button
               type="button"
               onClick={() => handleNavigate("/dashboard/goals")}
               className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
@@ -151,7 +161,7 @@ function ProfileMenu({ userData, mobile = false }) {
               Manage Goals
             </button>
 
-             <button
+            <button
               type="button"
               onClick={() => handleNavigate("/dashboard/progress")}
               className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
@@ -159,7 +169,7 @@ function ProfileMenu({ userData, mobile = false }) {
               See Progress
             </button>
 
-             <button
+            <button
               type="button"
               onClick={() => handleNavigate("/dashboard/statistics")}
               className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
@@ -231,6 +241,17 @@ function ProfileMenu({ userData, mobile = false }) {
           )}
 
           {/* Manage Profile */}
+
+          { userData?.role == "moderator" &&
+            <button
+              type="button"
+              onClick={() => handleNavigate("/moderation")}
+              className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+            >
+              Manage Reports
+            </button>
+          }
+
           <button
             type="button"
             onClick={() => handleNavigate("/profile")}

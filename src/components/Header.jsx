@@ -9,7 +9,6 @@ function Header() {
 
     const authStatus = useSelector((state) => state.auth.status);
     const userData = useSelector((state) => state.auth.userData);
-
     const navigate = useNavigate();
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
