@@ -24,6 +24,8 @@ import VerificationEmailSent from "./features/auth/pages/VerificationEmailSent.j
 import ForgotPassword from "./features/auth/pages/ForgetPassword.jsx";
 import ResetPassword from "./features/auth/pages/ResetPassword.jsx";
 import ChangePassword from "./features/auth/pages/ChangePassword.jsx";
+import ModerationDashboard from "./features/moderation/pages/ModerationDashboard.jsx";
+import ReportDetail from "./features/moderation/components/ReportDetail.jsx";
 import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
@@ -173,6 +175,22 @@ const router = createBrowserRouter([
           </AuthLayout>
         ),
       },
+      {
+        path: "/moderation",
+        element: (
+          <AuthLayout>
+            <ModerationDashboard/>
+          </AuthLayout>
+        )
+      },
+      {
+        path: "/moderation/reports/:id",
+        element: (
+          <AuthLayout>
+            <ReportDetail/>
+          </AuthLayout>
+        )
+      }
     ],
   },
 ]);
