@@ -4,8 +4,8 @@ import Button from "../../../components/Button";
 import Container from "../../../components/Container";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
-import { User } from "lucide-react";
-import { getQuestion, deleteQuestion } from "../api/questionService";
+import { User, ChevronDown, ChevronUp } from "lucide-react";
+import { getQuestion, deleteQuestion, getQuestionVotes, voteQuestion } from "../api/questionService";
 import CommentSection from "../../comments/components/CommentSection";
 
 export default function QuestionPage() {
@@ -19,12 +19,28 @@ export default function QuestionPage() {
   const isAuthor =
     question && userData ? question.author?.id === userData.id : false;
 
+  const [votes, setVotes] = useState({
+    upvotes: 0,
+    downvotes: 0,
+    score: 0,
+  });
+
+  const loadVotes = async () => {
+    try {
+      const response = await getQuestionVotes(questionId);
+      setVotes(response.data);
+    } catch (error) {
+      console.error("Failed to load votes", error.response?.data);
+    }
+  };
+
   useEffect(() => {
     if (questionId) {
       getQuestion(questionId)
         .then((response) => {
           if (response.data) {
             setQuestion(response.data);
+            loadVotes();
           } else {
             navigate("/");
           }
@@ -43,6 +59,15 @@ export default function QuestionPage() {
       navigate("/all-questions");
     } catch (error) {
       console.error(error.response?.data || "Failed to delete question");
+    }
+  };
+
+  const handleVote = async (voteType) => {
+    try {
+      await voteQuestion(questionId, {vote_type: voteType});
+      await loadVotes();
+    } catch (error) {
+      console.error(error.response?.data || "Failed to vote");
     }
   };
 
@@ -80,6 +105,31 @@ export default function QuestionPage() {
 
         {/* Body */}
         <div className="flex gap-4">
+          <div className="w-16 shrink-0 flex flex-col items-center gap-2">
+            {/* Upvote Button */}
+            <button
+              onClick={() => handleVote("upvote")}
+              className="p-2 rounded-full text-gray-500 hover:text-orange-500 hover:bg-orange-50 dark:text-gray-400 dark:hover:text-orange-400 dark:hover:bg-gray-800 transition-colors duration-200"
+              aria-label="Upvote"
+            >
+              <ChevronUp size={32} strokeWidth={2} />
+            </button>
+
+            {/* Score */}
+            <span className="text-xl font-semibold text-gray-700 dark:text-gray-200">
+              {votes.score}
+            </span>
+
+            {/* Downvote Button */}
+            <button
+              onClick={() => handleVote("downvote")}
+              className="p-2 rounded-full text-gray-500 hover:text-blue-500 hover:bg-blue-50 dark:text-gray-400 dark:hover:text-blue-400 dark:hover:bg-gray-800 transition-colors duration-200"
+              aria-label="Downvote"
+            >
+              <ChevronDown size={32} strokeWidth={2} />
+            </button>
+          </div>
+
           {/* Main content */}
           <div className="flex-1 min-w-0">
             {/* Description */}
@@ -122,14 +172,11 @@ export default function QuestionPage() {
               <Link to={`/questions/${question.id}/solutions`}>
                 <Button bgColor="bg-green-500">View All Solutions</Button>
               </Link>
-              
+
               <Link to={`/questions/${question.id}/report`}>
                 <Button bgColor="bg-red-500">Report</Button>
               </Link>
-
             </div>
-             
-            
 
             {/* Author card - bottom right, SO style */}
             <div className="flex justify-end mt-6">
