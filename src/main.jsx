@@ -26,6 +26,7 @@ import ResetPassword from "./features/auth/pages/ResetPassword.jsx";
 import ChangePassword from "./features/auth/pages/ChangePassword.jsx";
 import ModerationDashboard from "./features/moderation/pages/ModerationDashboard.jsx";
 import ReportDetail from "./features/moderation/components/ReportDetail.jsx";
+import IsVerified from "./features/auth/components/IsVerified.jsx";
 import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
@@ -69,7 +70,9 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <AuthLayout>
-            <DashboardPage />
+            <IsVerified>
+              <DashboardPage />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -77,7 +80,9 @@ const router = createBrowserRouter([
         path: "/dashboard/progress",
         element: (
           <AuthLayout>
-            <ProgressPage />
+            <IsVerified>
+              <ProgressPage />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -85,7 +90,9 @@ const router = createBrowserRouter([
         path: "/dashboard/goals",
         element: (
           <AuthLayout>
-            <GoalsPage />
+            <IsVerified>
+              <GoalsPage />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -93,7 +100,9 @@ const router = createBrowserRouter([
         path: "/dashboard/statistics",
         element: (
           <AuthLayout>
-            <StatisticsPage />
+            <IsVerified>
+              <StatisticsPage />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -109,7 +118,9 @@ const router = createBrowserRouter([
         path: "/add-question",
         element: (
           <AuthLayout authentication>
-            <AddQuestion />
+            <IsVerified>
+              <AddQuestion />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -117,7 +128,9 @@ const router = createBrowserRouter([
         path: "/questions/:questionId",
         element: (
           <AuthLayout authentication>
-            <QuestionPage />
+            <IsVerified>
+              <QuestionPage />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -125,7 +138,9 @@ const router = createBrowserRouter([
         path: "/questions/:id/edit",
         element: (
           <AuthLayout authentication>
-            <EditQuestion />
+            <IsVerified>
+              <EditQuestion />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -133,7 +148,9 @@ const router = createBrowserRouter([
         path: "/questions/:questionId/submit-solution",
         element: (
           <AuthLayout authentication>
-            <AddSolution />
+            <IsVerified>
+               <AddSolution />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -141,7 +158,9 @@ const router = createBrowserRouter([
         path: "/questions/:questionId/solutions",
         element: (
           <AuthLayout authentication>
-            <AllSolutions />
+            <IsVerified>
+              <AllSolutions />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -149,7 +168,9 @@ const router = createBrowserRouter([
         path: "/questions/:questionId/report",
         element: (
           <AuthLayout authentication>
-            <ReportQuestionPage />
+            <IsVerified>
+               <ReportQuestionPage />
+            </IsVerified>
           </AuthLayout>
         ),
       },
@@ -179,7 +200,9 @@ const router = createBrowserRouter([
         path: "/moderation",
         element: (
           <AuthLayout>
-            <ModerationDashboard/>
+            <IsVerified>
+               <ModerationDashboard/>
+            </IsVerified>
           </AuthLayout>
         )
       },
@@ -187,7 +210,9 @@ const router = createBrowserRouter([
         path: "/moderation/reports/:id",
         element: (
           <AuthLayout>
-            <ReportDetail/>
+            <IsVerified>
+              <ReportDetail/>
+            </IsVerified>
           </AuthLayout>
         )
       }
