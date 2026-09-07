@@ -45,5 +45,5 @@ export const getPreparationStatistics = () => {
 };
 
 export const getProgress = () => {
-  return api.get("/questions/progress")
+  return api.get("/questions/progress/")
 }
