@@ -186,7 +186,7 @@ const ProgressPage = () => {
         ),
       );
     } catch (error) {
-      console.error("Failed to update question status:", error);
+      console.error("Failed to update question status:", error?.response?.data);
     }
   };
 
