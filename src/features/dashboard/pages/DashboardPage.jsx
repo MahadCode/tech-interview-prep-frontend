@@ -47,8 +47,6 @@ const DashboardPage = () => {
     };
 
     fetchDashboard();
-
-    setLoading(false);
   }, []);
 
   if (loading) {
