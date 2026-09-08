@@ -214,6 +214,21 @@ function ProfileMenu({ userData, mobile = false }) {
               )}
             </button>
 
+            <button
+              type="button"
+              onClick={() => handleNavigate("/taxonomy")}
+              className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                isVerified ? "text-gray-700" : "text-gray-500"
+              }`}
+            >
+              <span>Manage Taxonomy</span>
+
+              {!isVerified && (
+                <Lock size={14} className="ml-auto text-gray-400" />
+              )}
+            </button>
+
+
             {/* Change Password */}
             <button
               type="button"
@@ -386,6 +401,26 @@ function ProfileMenu({ userData, mobile = false }) {
             }`}
           >
             <span>See Stats</span>
+
+            {!isVerified && (
+              <Lock
+                size={14}
+                className="ml-auto text-gray-400 dark:text-gray-500"
+              />
+            )}
+          </button>
+
+          {/* Manage Taxonomy */}
+          <button
+            type="button"
+            onClick={() => handleNavigate("/taxonomy")}
+            className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+              isVerified
+                ? "text-gray-700 dark:text-gray-200"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            <span>Manage Taxonomy</span>
 
             {!isVerified && (
               <Lock

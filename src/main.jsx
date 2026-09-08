@@ -28,6 +28,7 @@ import ChangePassword from "./features/auth/pages/ChangePassword.jsx";
 import ModerationDashboard from "./features/moderation/pages/ModerationDashboard.jsx";
 import ReportDetail from "./features/moderation/components/ReportDetail.jsx";
 import IsVerified from "./features/auth/components/IsVerified.jsx";
+import TaxonomyDashboard from "./features/taxonomy/pages/TaxonomyDashboard.jsx";
 import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
@@ -223,6 +224,16 @@ const router = createBrowserRouter([
           <AuthLayout>
             <IsVerified>
               <ReportDetail/>
+            </IsVerified>
+          </AuthLayout>
+        )
+      },
+      {
+        path: "/taxonomy",
+        element: (
+          <AuthLayout>
+            <IsVerified>
+              <TaxonomyDashboard/>  
             </IsVerified>
           </AuthLayout>
         )
