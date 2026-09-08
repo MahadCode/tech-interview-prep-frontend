@@ -5,11 +5,18 @@ import Container from "../../../components/Container";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import { User, ChevronDown, ChevronUp } from "lucide-react";
-import { getQuestion, deleteQuestion, getQuestionVotes, voteQuestion } from "../api/questionService";
+import {
+  getQuestion,
+  deleteQuestion,
+  getQuestionVotes,
+  voteQuestion,
+} from "../api/questionService";
 import CommentSection from "../../comments/components/CommentSection";
+import { getAllSolutions } from "../../discussion/api/solutionService";
 
 export default function QuestionPage() {
   const [question, setQuestion] = useState(null);
+  const [solutions, setSolutions] = useState([]);
 
   const { questionId } = useParams();
   const navigate = useNavigate();
@@ -35,22 +42,39 @@ export default function QuestionPage() {
   };
 
   useEffect(() => {
-    if (questionId) {
-      getQuestion(questionId)
-        .then((response) => {
-          if (response.data) {
-            setQuestion(response.data);
-            loadVotes();
-          } else {
-            navigate("/");
-          }
-        })
-        .catch(() => {
-          navigate("/");
-        });
-    } else {
+    if (!questionId) {
       navigate("/");
+      return;
     }
+
+    const fetchQuestion = async () => {
+      try {
+        const response = await getQuestion(questionId);
+
+        if (response.data) {
+          setQuestion(response.data);
+          loadVotes();
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error(error.response?.data || "Failed to load question");
+        navigate("/");
+      }
+    };
+
+    const fetchSolutions = async () => {
+      try {
+        const response = await getAllSolutions(questionId);
+
+        setSolutions(response.data.slice(0, 3));
+      } catch (error) {
+        console.error(error.response?.data || "Failed to load solutions");
+      }
+    };
+
+    fetchQuestion();
+    fetchSolutions();
   }, [questionId, navigate]);
 
   const handleDeleteQuestion = async () => {
@@ -64,7 +88,7 @@ export default function QuestionPage() {
 
   const handleVote = async (voteType) => {
     try {
-      await voteQuestion(questionId, {vote_type: voteType});
+      await voteQuestion(questionId, { vote_type: voteType });
       await loadVotes();
     } catch (error) {
       console.error(error.response?.data || "Failed to vote");
@@ -82,13 +106,30 @@ export default function QuestionPage() {
             </h1>
 
             {isAuthor && (
-              <div className="shrink-0 flex gap-2">
-                <Link to={`/questions/${question.id}/edit`}>
-                  <Button bgColor="bg-green-500">Edit</Button>
+              <div className="shrink-0 flex items-center gap-2">
+                <Link
+                  to={`/questions/${question.id}/edit`}
+                  className="px-3 py-1.5 rounded-md
+                 text-sm font-medium
+                 text-gray-600 dark:text-gray-300
+                 border border-gray-300 dark:border-gray-600
+                 hover:bg-gray-100 dark:hover:bg-gray-800
+                 transition-colors duration-200"
+                >
+                  Edit
                 </Link>
-                <Button bgColor="bg-red-500" onClick={handleDeleteQuestion}>
+
+                <button
+                  onClick={handleDeleteQuestion}
+                  className="px-3 py-1.5 rounded-md
+                 text-sm font-medium
+                 text-gray-500 dark:text-gray-400
+                 hover:text-red-600 dark:hover:text-red-400
+                 hover:bg-red-50 dark:hover:bg-red-900/20
+                 transition-colors duration-200"
+                >
                   Delete
-                </Button>
+                </button>
               </div>
             )}
           </div>
@@ -164,17 +205,45 @@ export default function QuestionPage() {
               ))}
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link to={`/questions/${question.id}/submit-solution`}>
-                <Button>Submit Your Solution</Button>
+            {/* Action Buttons */}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              {/* Submit Solution */}
+              <Link
+                to={`/questions/${question.id}/submit-solution`}
+                className="inline-flex items-center px-4 py-2 rounded-md
+               bg-gray-900 text-white text-sm font-medium
+               hover:bg-gray-700
+               dark:bg-gray-100 dark:text-gray-900
+               dark:hover:bg-gray-300
+               transition-colors duration-200"
+              >
+                Submit Your Solution
               </Link>
 
-              <Link to={`/questions/${question.id}/solutions`}>
-                <Button bgColor="bg-green-500">View All Solutions</Button>
+              {/* View All Solutions */}
+              <Link
+                to={`/questions/${question.id}/solutions`}
+                className="inline-flex items-center px-4 py-2 rounded-md
+               border border-gray-300 dark:border-gray-600
+               text-gray-700 dark:text-gray-200
+               text-sm font-medium
+               hover:bg-gray-100 dark:hover:bg-gray-800
+               transition-colors duration-200"
+              >
+                View All Solutions
               </Link>
 
-              <Link to={`/questions/${question.id}/report`}>
-                <Button bgColor="bg-red-500">Report</Button>
+              {/* Report */}
+              <Link
+                to={`/questions/${question.id}/report`}
+                className="inline-flex items-center px-4 py-2 rounded-md
+               text-sm font-medium
+               text-gray-500 dark:text-gray-400
+               hover:text-red-600 dark:hover:text-red-400
+               hover:bg-red-50 dark:hover:bg-red-900/20
+               transition-colors duration-200"
+              >
+                Report
               </Link>
             </div>
 
@@ -200,6 +269,62 @@ export default function QuestionPage() {
                 </span>
               </div>
             </div>
+
+            {solutions.length > 0 && (
+              <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">
+                  Solutions
+                </h2>
+
+                <div className="space-y-8">
+                  {solutions.map((solution) => (
+                    <div
+                      key={solution.id}
+                      className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-b-0"
+                    >
+                      {/* Solution Author */}
+                      <div className="flex justify-start mb-5">
+                        <div className="max-w-full bg-blue-50 dark:bg-gray-900 rounded-md p-3 flex items-center gap-3">
+                          {solution.author?.avatar ? (
+                            <img
+                              src={solution.author.avatar}
+                              alt={solution.author?.username || "Author"}
+                              className="w-8 h-8 rounded object-cover border border-gray-200 dark:border-gray-600 shrink-0"
+                            />
+                          ) : (
+                            <div className="w-8 h-8 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-gray-200 dark:border-gray-600 shrink-0">
+                              <User
+                                size={16}
+                                className="text-gray-500 dark:text-gray-300"
+                              />
+                            </div>
+                          )}
+
+                          <span className="text-sm text-blue-700 dark:text-blue-300 font-medium wrap-break-words">
+                            {solution.author?.username || "Anonymous"}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Solution Content */}
+                      <div className="browser-css text-gray-800 dark:text-gray-100 wrap-break-words overflow-hidden">
+                        {parse(solution.content || "")}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* View All Solutions Link */}
+                <div className="mt-6">
+                  <Link
+                    to={`/questions/${question.id}/solutions`}
+                    className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    See all solutions →
+                  </Link>
+                </div>
+              </div>
+            )}
 
             <CommentSection questionId={question.id} />
           </div>
