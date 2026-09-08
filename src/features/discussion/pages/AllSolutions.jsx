@@ -72,7 +72,7 @@ function AllSolutions() {
                         className="w-8 h-8 rounded object-cover border border-gray-200 dark:border-gray-600 shrink-0"
                       />
                     ) : (
-                      <div className="w-8 h-8 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-gray-200 dark:border-gray-600 flex-shrink-0">
+                      <div className="w-8 h-8 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center border border-gray-200 dark:border-gray-600 shrink-0">
                         <User
                           size={16}
                           className="text-gray-500 dark:text-gray-300"
@@ -80,7 +80,7 @@ function AllSolutions() {
                       </div>
                     )}
 
-                    <span className="text-sm text-blue-700 dark:text-blue-300 font-medium break-words">
+                    <span className="text-sm text-blue-700 dark:text-blue-300 font-medium wrap-break-words">
                       {solution.author?.username || "Anonymous"}
                     </span>
                   </div>
@@ -116,7 +116,7 @@ function AllSolutions() {
                 </div>
 
                 {/* Solution Content */}
-                <div className="browser-css text-gray-800 dark:text-gray-100 break-words overflow-hidden">
+                <div className="browser-css text-gray-800 dark:text-gray-100 wrap-break-words overflow-hidden">
                   {parse(solution.content || "")}
                 </div>
               </div>
