@@ -12,6 +12,7 @@ import AddQuestion from "./features/questions/pages/AddQuestion.jsx";
 import EditQuestion from "./features/questions/pages/EditQuestion.jsx";
 import AllQuestions from "./features/questions/pages/AllQuestions.jsx";
 import AddSolution from "./features/discussion/pages/AddSolution.jsx";
+import EditSolution from "./features/discussion/pages/EditSolution.jsx";
 import AllSolutions from "./features/discussion/pages/AllSolutions.jsx";
 import ReportQuestionPage from "./features/reports/pages/ReportQuesionPage.jsx";
 import ProfilePage from "./features/dashboard/pages/ProfilePage.jsx";
@@ -150,6 +151,16 @@ const router = createBrowserRouter([
           <AuthLayout authentication>
             <IsVerified>
                <AddSolution />
+            </IsVerified>
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/questions/:questionId/solutions/:solutionId/edit",
+        element: (
+          <AuthLayout authentication>
+            <IsVerified>
+               <EditSolution/>
             </IsVerified>
           </AuthLayout>
         ),
