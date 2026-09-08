@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserRound, ChevronDown } from "lucide-react";
+import { UserRound, ChevronDown, Lock } from "lucide-react";
 
 import { logout as logoutAction } from "../features/auth/authSlice.js";
 import { logout as logoutApi } from "../features/auth/api/auth.js";
@@ -13,6 +13,8 @@ function ProfileMenu({ userData, mobile = false }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isVerified = userData?.account_status === "active";
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -75,7 +77,6 @@ function ProfileMenu({ userData, mobile = false }) {
         {mobile && (
           <>
             <span>Profile</span>
-
             <ChevronDown
               size={18}
               className={`ml-auto transition-transform ${
@@ -127,16 +128,24 @@ function ProfileMenu({ userData, mobile = false }) {
           </div>
 
           <div className="py-2">
+            {/* Manage Reports */}
             {userData?.role == "moderator" && (
               <button
                 type="button"
                 onClick={() => handleNavigate("/moderation")}
-                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+                className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                  isVerified ? "text-gray-700" : "text-gray-500"
+                }`}
               >
-                Manage Reports
+                <span>Manage Reports</span>
+
+                {!isVerified && (
+                  <Lock size={14} className="ml-auto text-gray-400" />
+                )}
               </button>
             )}
 
+            {/* Manage Profile */}
             <button
               type="button"
               onClick={() => handleNavigate("/profile")}
@@ -145,47 +154,83 @@ function ProfileMenu({ userData, mobile = false }) {
               Manage Profile
             </button>
 
+            {/* Dashboard */}
             <button
               type="button"
               onClick={() => handleNavigate("/dashboard")}
-              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                isVerified ? "text-gray-700" : "text-gray-500"
+              }`}
             >
-              Dashboard
+              <span>Dashboard</span>
+
+              {!isVerified && (
+                <Lock size={14} className="ml-auto text-gray-400" />
+              )}
             </button>
 
+            {/* Manage Goals */}
             <button
               type="button"
               onClick={() => handleNavigate("/dashboard/goals")}
-              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                isVerified ? "text-gray-700" : "text-gray-500"
+              }`}
             >
-              Manage Goals
+              <span>Manage Goals</span>
+
+              {!isVerified && (
+                <Lock size={14} className="ml-auto text-gray-400" />
+              )}
             </button>
 
+            {/* See Progress */}
             <button
               type="button"
               onClick={() => handleNavigate("/dashboard/progress")}
-              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                isVerified ? "text-gray-700" : "text-gray-500"
+              }`}
             >
-              See Progress
+              <span>See Progress</span>
+
+              {!isVerified && (
+                <Lock size={14} className="ml-auto text-gray-400" />
+              )}
             </button>
 
+            {/* See Stats */}
             <button
               type="button"
               onClick={() => handleNavigate("/dashboard/statistics")}
-              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                isVerified ? "text-gray-700" : "text-gray-500"
+              }`}
             >
-              See Stats
+              <span>See Stats</span>
+
+              {!isVerified && (
+                <Lock size={14} className="ml-auto text-gray-400" />
+              )}
             </button>
 
+            {/* Change Password */}
             <button
               type="button"
               onClick={() => handleNavigate("/change-password")}
-              className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              className={`flex w-full items-center px-4 py-2.5 text-left text-sm hover:bg-gray-50 ${
+                isVerified ? "text-gray-700" : "text-gray-500"
+              }`}
             >
-              Change Password
+              <span>Change Password</span>
+
+              {!isVerified && (
+                <Lock size={14} className="ml-auto text-gray-400" />
+              )}
             </button>
           </div>
 
+          {/* Logout */}
           <div className="border-t border-gray-100 py-2">
             <button
               type="button"
@@ -201,7 +246,6 @@ function ProfileMenu({ userData, mobile = false }) {
       {/* Mobile Profile Options */}
       {isOpen && mobile && (
         <div className="mt-1 ml-4 border-l-2 border-gray-200 dark:border-gray-600">
-          {/* Email */}
           {userData?.email && (
             <p className="px-5 pt-2 pb-1 text-xs text-gray-500 dark:text-gray-400 truncate">
               {userData.email}
@@ -240,18 +284,29 @@ function ProfileMenu({ userData, mobile = false }) {
             </div>
           )}
 
-          {/* Manage Profile */}
-
-          { userData?.role == "moderator" &&
+          {/* Manage Reports */}
+          {userData?.role == "moderator" && (
             <button
               type="button"
               onClick={() => handleNavigate("/moderation")}
-              className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+              className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+                isVerified
+                  ? "text-gray-700 dark:text-gray-200"
+                  : "text-gray-500 dark:text-gray-400"
+              }`}
             >
-              Manage Reports
-            </button>
-          }
+              <span>Manage Reports</span>
 
+              {!isVerified && (
+                <Lock
+                  size={14}
+                  className="ml-auto text-gray-400 dark:text-gray-500"
+                />
+              )}
+            </button>
+          )}
+
+          {/* Manage Profile */}
           <button
             type="button"
             onClick={() => handleNavigate("/profile")}
@@ -260,45 +315,104 @@ function ProfileMenu({ userData, mobile = false }) {
             Manage Profile
           </button>
 
-          <button
-            type="button"
-            onClick={() => handleNavigate("/dashboard")}
-            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
-          >
-            Dashboard
-          </button>
-
           {/* Dashboard */}
           <button
             type="button"
-            onClick={() => handleNavigate("/dashboard/goals")}
-            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+            onClick={() => handleNavigate("/dashboard")}
+            className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+              isVerified
+                ? "text-gray-700 dark:text-gray-200"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
           >
-            Manage Gaols
+            <span>Dashboard</span>
+
+            {!isVerified && (
+              <Lock
+                size={14}
+                className="ml-auto text-gray-400 dark:text-gray-500"
+              />
+            )}
           </button>
 
+          {/* Manage Goals */}
+          <button
+            type="button"
+            onClick={() => handleNavigate("/dashboard/goals")}
+            className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+              isVerified
+                ? "text-gray-700 dark:text-gray-200"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
+          >
+            <span>Manage Goals</span>
+
+            {!isVerified && (
+              <Lock
+                size={14}
+                className="ml-auto text-gray-400 dark:text-gray-500"
+              />
+            )}
+          </button>
+
+          {/* See Progress */}
           <button
             type="button"
             onClick={() => handleNavigate("/dashboard/progress")}
-            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+            className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+              isVerified
+                ? "text-gray-700 dark:text-gray-200"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
           >
-            See Progress
+            <span>See Progress</span>
+
+            {!isVerified && (
+              <Lock
+                size={14}
+                className="ml-auto text-gray-400 dark:text-gray-500"
+              />
+            )}
           </button>
 
+          {/* See Stats */}
           <button
             type="button"
             onClick={() => handleNavigate("/dashboard/statistics")}
-            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+            className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+              isVerified
+                ? "text-gray-700 dark:text-gray-200"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
           >
-            See Stats
+            <span>See Stats</span>
+
+            {!isVerified && (
+              <Lock
+                size={14}
+                className="ml-auto text-gray-400 dark:text-gray-500"
+              />
+            )}
           </button>
 
+          {/* Change Password */}
           <button
             type="button"
             onClick={() => handleNavigate("/change-password")}
-            className="block w-full px-5 py-2.5 text-left text-sm text-gray-700 hover:text-pink-500 dark:text-gray-200"
+            className={`flex w-full items-center px-5 py-2.5 text-left text-sm hover:text-pink-500 ${
+              isVerified
+                ? "text-gray-700 dark:text-gray-200"
+                : "text-gray-500 dark:text-gray-400"
+            }`}
           >
-            Change Password
+            <span>Change Password</span>
+
+            {!isVerified && (
+              <Lock
+                size={14}
+                className="ml-auto text-gray-400 dark:text-gray-500"
+              />
+            )}
           </button>
 
           {/* Logout */}
