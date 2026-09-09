@@ -29,6 +29,7 @@ import ModerationDashboard from "./features/moderation/pages/ModerationDashboard
 import ReportDetail from "./features/moderation/components/ReportDetail.jsx";
 import IsVerified from "./features/auth/components/IsVerified.jsx";
 import TaxonomyDashboard from "./features/taxonomy/pages/TaxonomyDashboard.jsx";
+import DeleteAccount from "./features/auth/pages/DeleteAccount.jsx";
 import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
@@ -236,6 +237,12 @@ const router = createBrowserRouter([
               <TaxonomyDashboard/>  
             </IsVerified>
           </AuthLayout>
+        )
+      },
+      {
+        path: "/delete-account",
+        element: (
+          <DeleteAccount/>
         )
       }
     ],

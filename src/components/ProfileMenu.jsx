@@ -245,6 +245,16 @@ function ProfileMenu({ userData, mobile = false }) {
             </button>
           </div>
 
+          <div className="border-t border-gray-100 py-2">
+            <button
+              type="button"
+              onClick={() => handleNavigate("/delete-account")}
+              className="w-full px-4 py-1 text-left text-sm text-red-600 hover:bg-red-50"
+            >
+              Delete Account
+            </button>
+          </div>
+
           {/* Logout */}
           <div className="border-t border-gray-100 py-2">
             <button
@@ -448,6 +458,14 @@ function ProfileMenu({ userData, mobile = false }) {
                 className="ml-auto text-gray-400 dark:text-gray-500"
               />
             )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavigate("/delete-account")}
+            className="block w-full px-5 py-1 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"
+          >
+            Delete Account
           </button>
 
           {/* Logout */}
