@@ -21,8 +21,6 @@ export default function SolutionForm({ questionId, solution }) {
 
   useEffect(() => {
     if (solution) {
-      console.log("setting the content")
-      console.log(solution)
       reset({
         content: solution.content || "",
       });
