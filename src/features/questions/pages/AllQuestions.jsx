@@ -3,7 +3,7 @@ import Container from "../../../components/Container";
 import QuestionCard from "../components/QuestionCard";
 import { getAllQuestion } from "../api/questionService";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 function AllQuestions() {
   const [questions, setQuestions] = useState([]);
@@ -60,7 +60,7 @@ function AllQuestions() {
               <Link
                 to="/verification-email-sent"
                 state={{
-                  from: "/verify-email",
+                  from: "verify-email",
                   user: userData,
                 }}
                 className="text-sm font-semibold text-white
